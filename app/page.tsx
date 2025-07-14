@@ -1,8 +1,45 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 import React, { useState } from 'react';
 
-const translations = {
+const langs = ['ru', 'en', 'kz'] as const;
+type Lang = typeof langs[number];
+
+const translations: Record<Lang, {
+  lang: string;
+  nav: { href: string; label: string }[];
+  logo_sub: string;
+  welcome: { h1: string; p: string; button: string };
+  mission: { title: string; text: string };
+  painTitle: string;
+  pains: { title: string; text: string }[];
+  solutionTitle: string;
+  features: { title: string; desc: string }[];
+  archTitle: string;
+  archs: { title: string; desc: string }[];
+  techs: string[];
+  kpiTitle: string;
+  kpis: { title: string; value: string }[];
+  evidenceTitle: string;
+  evidence: string[];
+  demoBtn: string;
+  ecosystemTitle: string;
+  partnersTitle: string;
+  partners: string[];
+  exportTitle: string;
+  exportText: string;
+  impactTitle: string;
+  impact1: string;
+  impact2: string;
+  impact3: string;
+  aboutAuthorTitle: string;
+  aboutAuthorText: string;
+  finalCTAText: string;
+  finalCTAButton: string;
+  contactsTitle: string;
+  form: { name: string; email: string; affiliation: string; comment: string; send: string };
+  contact: { email: string; telegram: string; linkedin: string };
+  copyright: string;
+}> = {
   ru: {
     lang: 'RU',
     nav: [
@@ -18,13 +55,17 @@ const translations = {
     ],
     logo_sub: 'Метавселенная: Поколение Инноваторов (π-ПИ)',
     welcome: {
-      h1: 'Национальная образовательная метавселенная Республики Казахстана',
-      p: 'Системная цифровая инфраструктура для развития человеческого капитала и технологического лидерства.',
+      h1: 'Инициатива Национальной образовательной метавселенной Республики Казахстан',
+      p: 'Проект π — это создаваемая в Казахстане образовательная метавселенная для школьников 10–18 лет. Здесь дети получают доступ к современным технологиям (ИИ, VR/AR), развивают навыки будущего и включаются в систему образования нового поколения.',
       button: 'Смотреть подробнее',
     },
     mission: {
       title: 'Миссия проекта π',
-      text: 'Цифровая экосистема, превращающая вызовы образования в возможности устойчивого развития, цифровизации и инноваций.',
+      text: `Создать фундаментальную цифровую платформу для развития высококачественного человеческого капитала в интересах Казахстана — раскрытие интеллектуального потенциала и инновационного творчества нового поколения, обеспечение национальной конкурентоспособности и технологического лидерства.
+Для детей — технологии и возможности.
+Для родителей — прозрачность и поддержка.
+Для государства — данные и стратегия.
+Непрерывное образование, современная инфраструктура дата-центров и аналитика для формирования государственной стратегии.`,
     },
     painTitle: 'Ключевые вызовы',
     pains: [
@@ -121,20 +162,20 @@ const translations = {
     ],
     evidenceTitle: 'Доказательства и подтверждения',
     evidence: [
-      'Анализ стратегических документов и программ министерств',
-      '20+ экспертных и стратегических сессий с директорами, педагогами, EdTech-экспертами',
-      '2500+ анкет и интервью с учениками, родителями и учителями',
-      'Разработана архитектура платформы и финмодель',
-      'Экспертные отзывы и аналитика по проекту',
+      'Комплексный анализ стратегических документов и государственных программ',
+      'Проведено 20+ экспертных сессий и интервью с ведущими профессорами, бизнес-треккерами и педагогами',
+      'Собрано более 2500 анкет и глубинных интервью с учениками, родителями и педагогами из разных регионов',
+      'Разработаны архитектура платформы и финансовая модель с тщательным стресс-тестированием',
+      'Получены независимые экспертные отзывы и проведён внешний аудит',
     ],
     demoBtn: 'Запросить документы / демо',
     ecosystemTitle: 'Экосистема и масштабирование',
     partnersTitle: 'Партнёры:',
     partners: [
-      'Министерства (образование, наука, цифровизация)',
+      'Профессора ведущих университетов',
+      'Бизнес-треккеры и эксперты EdTech',
+      'Министерства (образование, наука, цифровизация) — в процессе переговоров',
       'Школы и вузы',
-      'EdTech и IT-эксперты',
-      'Бизнес, HR, индустриальные партнёры',
       'Учителя, родители, ученики',
     ],
     exportTitle: 'Экспорт и масштабирование:',
@@ -142,10 +183,16 @@ const translations = {
       'Архитектура платформы легко адаптируется для интеграции в другие страны Центральной Азии.',
     impactTitle: 'Влияние и лидерство',
     impact1:
-      'Проект прошёл путь от исследований и аналитики до архитектуры и финмодели.',
+      'Проект создаёт фундаментальную основу цифрового образования и развития человеческого капитала в Казахстане.',
     impact2:
-      'Все решения приняты на основе анализа, консультаций и обратной связи экспертов.',
-    impact3: 'Документация, результаты и аналитика открыты для проверки.',
+      'Все решения принимаются на основе глубокого анализа, консультаций с экспертами и обратной связи от сообщества.',
+    impact3: 'Документация, расчёты и результаты доступны для открытой проверки.',
+    aboutAuthorTitle: 'Об авторе',
+    aboutAuthorText:
+      'Инноватор, преподаватель, разработчик проектов по внедрению цифровых технологий в образовании Республики Казахстан. ' +
+      'Эксперт с глубоким пониманием потребностей современного образования и цифровизации.',
+    finalCTAText: 'Каждый ребёнок обладает искрой, способной осветить мир.',
+    finalCTAButton: 'Присоединиться к проекту',
     contactsTitle: 'Контакты / Получить материалы',
     form: {
       name: 'Имя',
@@ -155,9 +202,9 @@ const translations = {
       send: 'Отправить заявку',
     },
     contact: {
-      email: 'akmaral.onlasyn@gmail.com',
+      email: 'aisulubekey16@gmail.com',
       telegram: '@onglassynka',
-      linkedin: 'https://www.linkedin.com/in/akmaral-onglassyn-2142b9ba/',
+      linkedin: 'https://www.linkedin.com/in/aisulu-akmaral-onglassyn-2142b9ba/',
     },
     copyright: `π — Национальная образовательная метавселенная Казахстана`,
   },
@@ -176,13 +223,17 @@ const translations = {
     ],
     logo_sub: 'Metaverse: Generation of Innovators π',
     welcome: {
-      h1: 'National Education Metaverse of Respublic of Kazakhstan',
-      p: 'A systemic digital infrastructure for human capital development and technological leadership.',
+      h1: 'Initiative of the National Educational Metaverse of the Republic of Kazakhstan',
+      p: 'π project is an educational metaverse under development in Kazakhstan for students aged 10-18. Here, children gain access to modern technologies (AI, VR/AR), develop future skills, and engage in a new generation education system.',
       button: 'Learn more',
     },
     mission: {
       title: 'π Project Mission',
-      text: 'A digital ecosystem that transforms educational challenges into new opportunities for sustainable growth, digitalization, and innovation.',
+      text: `Create a fundamental digital platform for developing high-quality human capital in the interests of Kazakhstan — unlocking the intellectual potential and innovative creativity of the new generation, ensuring national competitiveness and technological leadership.
+For children — technology and opportunities.
+For parents — transparency and support.
+For the state — data and strategy.
+Lifelong education, modern data center infrastructure, and analytics for state strategy formation.`,
     },
     painTitle: 'Key Challenges',
     pains: [
@@ -279,20 +330,20 @@ const translations = {
     ],
     evidenceTitle: 'Proof & Documentation',
     evidence: [
-      'Analysis of strategic documents and government programs',
-      '20+ expert and strategic sessions with school directors, teachers, EdTech experts',
-      '2500+ surveys and interviews with students, parents, teachers',
-      'Platform architecture and financial model developed',
-      'Expert feedback and analytics on the project',
+      'Comprehensive analysis of strategic documents and government programs',
+      '20+ expert sessions and interviews with leading professors, business trackers and educators',
+      'Collected 2500+ surveys and deep interviews with students, parents, and teachers from different regions',
+      'Developed platform architecture and financial model with thorough stress testing',
+      'Received independent expert reviews and external audit',
     ],
     demoBtn: 'Request documents / demo',
     ecosystemTitle: 'Ecosystem & Scaling',
     partnersTitle: 'Partners:',
     partners: [
-      'Ministries (education, science, digitalization)',
+      'Professors from leading universities',
+      'Business trackers and EdTech experts',
+      'Ministries (education, science, digitalization) — in negotiation process',
       'Schools and universities',
-      'EdTech and IT experts',
-      'Business, HR, industrial partners',
       'Teachers, parents, students',
     ],
     exportTitle: 'Export & scaling:',
@@ -300,10 +351,16 @@ const translations = {
       'Platform architecture is easily adaptable for integration into other Central Asian countries.',
     impactTitle: 'Impact & Leadership',
     impact1:
-      'The project moved from research and analytics to architecture and financial model.',
+      'The project creates a fundamental basis for digital education and human capital development in Kazakhstan.',
     impact2:
-      'All solutions are based on analysis, expert consultations, and feedback.',
-    impact3: 'Documentation, results, and analytics are open for review.',
+      'All decisions are made based on in-depth analysis, expert consultations and community feedback.',
+    impact3: 'Documentation, calculations, and results are open for review.',
+    aboutAuthorTitle: 'About the Author',
+    aboutAuthorText:
+      'Innovator, educator, and developer of projects for implementing digital technologies in Kazakhstan’s education system. ' +
+      'An expert with deep understanding of the needs of modern education and digitalization.',
+    finalCTAText: 'Every child has a spark capable of lighting up the world.',
+    finalCTAButton: 'Join the Project',
     contactsTitle: 'Contacts / Request materials',
     form: {
       name: 'Name',
@@ -334,31 +391,35 @@ const translations = {
     ],
     logo_sub: 'π инноваторлар ұрпағы π - Метаәлемi',
     welcome: {
-      h1: 'Қазақстан Республикасының ұлттық білім беру метаәлемі',
-      p: 'Адами капиталды дамыту мен технологиялық көшбасшылыққа арналған жүйелі цифрлық инфрақұрылым.',
+      h1: 'π — Қазақстан Республикасы үшін Ұлттық білім беру метаәлемі бастамасы',
+      p: 'π жобасы — Қазақстанда жасалып жатқан 10-18 жас аралығындағы оқушыларға арналған білім беру метаәлемі. Мұнда балалар заманауи технологияларға (ЖИ, VR/AR) қол жеткізіп, болашақ дағдыларын дамытып, жаңа буын білім жүйесіне қосылады.',
       button: 'Толығырақ',
     },
     mission: {
       title: 'π жобасының миссиясы',
-      text: 'Қазақстанның білім беру жүйесіндегі сын-қатерлерді орнықты даму, цифрландыру және инновацияға жаңа мүмкіндіктерге айналдыратын цифрлық экожүйе.',
+      text: `Қазақстан мүддесі үшін жоғары сапалы адами капиталды дамытуға арналған негізгі цифрлық платформаны жасау — интеллектуалдық әлеует пен жаңа буынның инновациялық шығармашылығын ашу, ұлттық бәсекеге қабілеттілік пен технологиялық көшбасшылықты қамтамасыз ету.
+Балаларға — технологиялар мен мүмкіндіктер.
+Ата-аналарға — ашықтық пен қолдау.
+Мемлекетке — деректер мен стратегия.
+Үздіксіз білім беру, заманауи деректер орталығы инфрақұрылымы және мемлекеттік стратегияны қалыптастыру үшін аналитика.`,
     },
     painTitle: 'Негізгі мәселелер',
     pains: [
       {
-        title: 'Жекелендірілген білімге тең қолжетімділіктің болмауы',
-        text: 'Көптеген бала заманауи жеке траекторияларға, ерте кәсіби бағдарлауға және инновациялық шешімдерге қол жеткізе алмай отыр.',
+        title: 'Жекелендірілген білімге тең қолжетімділік жоқтығы',
+        text: 'Көптеген балалар заманауи жеке оқу траекториялары мен инновацияларға қол жеткізе алмайды.',
       },
       {
-        title: 'EdTech жүйесінің бытыраңқылығы, ұлттық big data жоқтығы',
-        text: 'EdTech шешімдері ауқымды емес әрі мемлекеттік саясат пен кадрлық жоспарлауға интеграцияланбаған.',
+        title: 'EdTech жүйесінің бөлшектенуі, ұлттық үлкен деректердің жоқтығы',
+        text: 'EdTech нарығы мемлекеттік саясат пен кадрлық басқарумен интеграцияланбаған.',
       },
       {
         title: 'Әлеуметтік және өңірлік теңсіздік',
-        text: 'Ауылдық жерлер мен осал топтардағы балалар цифрлық экономикадан тыс қалып отыр.',
+        text: 'Аймақтар мен осал топтардан шыққан балалар цифрлық экономикадан тыс қалуда.',
       },
       {
-        title: 'Адами капиталды басқару инфрақұрылымының болмауы',
-        text: 'Білім, бизнес және HR үшін big data-аналитика жоқ.',
+        title: 'Адами капиталды басқару инфрақұрылымы жоқтығы',
+        text: 'Білім, бизнес және кадрлар үшін толықтай үлкен деректер аналитикасы жоқ.',
       },
     ],
     solutionTitle: 'π шешімі',
@@ -368,24 +429,24 @@ const translations = {
         desc: 'π — мемлекеттік бағдарламалар мен еңбек нарығымен толық интеграцияланған цифрлық инфрақұрылым.',
       },
       {
-        title: 'Барлық балаға 100% тегін қолжетімділік',
-        desc: '90%-дан астам техникалық қамту расталған, соның ішінде аймақтар мен осал топтар.',
+        title: 'Барлық балаларға 100% тегін қолжетімділік',
+        desc: '90%+ техникалық қамту, соның ішінде аймақтар мен осал топтар.',
       },
       {
-        title: 'AI/VR/Big Data — экожүйенің өзегі',
-        desc: 'Жеке тректер, диагностика, мемлекет пен бизнес үшін big data.',
+        title: 'ЖИ/VR/Үлкен деректер негізінде',
+        desc: 'Жеке оқу траекториялары, диагностика, мемлекет пен бизнес үшін үлкен деректер.',
       },
       {
         title: 'Open API және масштабталу',
-        desc: 'Мектептер, аймақтар мен стартаптар модульдерді біріктіре алады.',
+        desc: 'Мектептер, аймақтар және стартаптар модульдерді біріктіре алады.',
       },
       {
         title: 'Қаржылық модель',
-        desc: 'Юнит-экономика жасалды, stress-test өткізілді.',
+        desc: 'Юнит-экономика жасалды және стресс-тест өткізілді.',
       },
       {
-        title: 'Мемлекеттік стратегиялармен толық үйлесім',
-        desc: 'Архитектура ұлттық нормативтік және стратегиялық базаға сәйкес келеді.',
+        title: 'Мемлекеттік стратегиялармен интеграция',
+        desc: 'Архитектура Қазақстанның нормативтік және стратегиялық базасына сәйкес келеді.',
       },
     ],
     archTitle: 'Архитектура және артықшылықтар',
@@ -396,7 +457,7 @@ const translations = {
       },
       {
         title: 'Өзара әрекеттестік',
-        desc: 'Иммерсивті орта, жеке траекториялар, көпсалалы бағыт.',
+        desc: 'Иммерсивті орта, жеке оқу траекториялары, көпсалалы.',
       },
       {
         title: 'Экожүйе',
@@ -408,7 +469,7 @@ const translations = {
       'AR',
       'XR',
       'AI',
-      'Big Data',
+      'Үлкен деректер',
       'Бұлттық есептеу',
       'Киберқауіпсіздік',
     ],
@@ -427,42 +488,48 @@ const translations = {
         value: '$28/оқушы/жыл, өтелу мерзімі 4 жыл (есеп)',
       },
       {
-        title: 'Сарапшы тарту',
-        value: '20+ сессия және сұхбат (директорлар, сарапшылар, педагогтар)',
+        title: 'Сарапшы қолдауы',
+        value: '20+ сессиялар және сұхбаттар (директорлар, сарапшылар, педагогтар)',
       },
       {
         title: 'Зерттеу',
-        value: '2500+ сауалнама мен сұхбат (оқушылар, ата-аналар, мұғалімдер)',
+        value: '2500+ сауалнама және сұхбат (оқушылар, ата-аналар, мұғалімдер)',
       },
     ],
-    evidenceTitle: 'Дәлелдер және құжаттама',
+    evidenceTitle: 'Дәлелдер және құжаттамалар',
     evidence: [
-      'Министрліктер мен бағдарламалардың стратегиялық құжаттарын талдау',
-      '20+ сараптамалық және стратегиялық сессия (директорлар, педагогтар, EdTech сарапшылары)',
-      '2500+ сауалнама және сұхбат (оқушылар, ата-аналар, мұғалімдер)',
-      'Платформа архитектурасы мен қаржылық моделі әзірленді',
-      'Жоба бойынша сараптамалық пікірлер мен талдау',
+      'Стратегиялық құжаттар мен мемлекеттік бағдарламалардың кешенді талдауы',
+      '20+ сараптамалық сессиялар мен сұхбаттар жетекші профессорлармен, бизнес треккерами және педагогтармен',
+      '2500+ сауалнама мен терең сұхбаттар әртүрлі аймақтардағы оқушылар, ата-аналар мен мұғалімдер арасында',
+      'Платформа архитектурасы мен қаржылық модель әзірленіп, стресс-тесттер жүргізілді',
+      'Тәуелсіз сараптамалық пікірлер және сыртқы аудит алынды',
     ],
     demoBtn: 'Құжаттар / демо сұрау',
-    ecosystemTitle: 'Экожүйе және ауқымдандыру',
+    ecosystemTitle: 'Экожүйе және ауқымдау',
     partnersTitle: 'Серіктестер:',
     partners: [
-      'Министрліктер (білім, ғылым, цифрландыру)',
+      'Жоғары оқу орындарының профессорлары',
+      'Бизнес треккерлер және EdTech сарапшылары',
+      'Министрліктер (білім, ғылым, цифрландыру) – келіссөздер процесінде',
       'Мектептер мен ЖОО',
-      'EdTech және IT сарапшылары',
-      'Бизнес, HR, индустриялық серіктестер',
       'Мұғалімдер, ата-аналар, оқушылар',
     ],
     exportTitle: 'Экспорт және ауқымдау:',
     exportText:
-      'Платформа архитектурасы Орталық Азия елдеріне бейімдеуге оңай.',
+      'Платформа архитектурасы Орталық Азия елдеріне оңай бейімделеді.',
     impactTitle: 'Тиімділік және көшбасшылық',
     impact1:
-      'Жоба зерттеу мен аналитикадан архитектура мен қаржылық модельге дейін өтті.',
+      'Жоба Қазақстанда цифрлық білім беру және адами капиталды дамытудың негізін жасайды.',
     impact2:
-      'Барлық шешім сараптамалық кеңес, талдау және кері байланыс негізінде қабылданды.',
-    impact3: 'Құжаттама, нәтижелер және аналитика ашық.',
-    contactsTitle: 'Байланыс / Материал сұрау',
+      'Барлық шешімдер терең талдау, сараптамалық кеңестер және қоғамның кері байланысы негізінде қабылданады.',
+    impact3: 'Құжаттама, есептер және нәтижелер ашық түрде қолжетімді.',
+    aboutAuthorTitle: 'Жобаның авторы туралы',
+    aboutAuthorText:
+      'Инноватор, педагог және Қазақстанның білім беру жүйесіне цифрлық технологияларды енгізу жобаларын әзірлеуші. ' +
+      'Қазіргі білім мен цифрландыру қажеттіліктерін терең түсінетін сарапшы.',
+    finalCTAText: 'Әр балада әлемді жарықтандыратын жарқыл бар.',
+    finalCTAButton: 'Жобаның қатысушысы болыңыз',
+    contactsTitle: 'Байланыстар / Материалдарды сұрау',
     form: {
       name: 'Аты-жөні',
       email: 'Email',
@@ -471,17 +538,15 @@ const translations = {
       send: 'Сұраныс жіберу',
     },
     contact: {
-      email: 'akmaral.onlasyn@gmail.com',
+      email: 'aisulubekey16@gmail.com',
       telegram: '@onglassynka',
-      linkedin: 'https://www.linkedin.com/in/akmaral-onglassyn-2142b9ba/',
+      linkedin: 'https://www.linkedin.com/in/aisulu-akmaral-onglassyn-2142b9ba/',
     },
-    copyright: `π — Қазақстанның ұлттық білім беру метаәлемі`,
+    copyright: `π — Қазақстанның ұлттық білім беру метавселенной`,
   },
 };
 
-const langs = ['ru', 'en', 'kz'];
-
-function LogoBlock({ lang, logoSub }) {
+function LogoBlock({ lang, logoSub }: { lang: Lang; logoSub: string }) {
   return (
     <div className="flex flex-col items-center mb-2 select-none">
       <div className="rounded-full bg-gradient-to-br from-blue-200 to-blue-500 shadow-lg w-32 h-32 flex items-center justify-center">
@@ -496,7 +561,7 @@ function LogoBlock({ lang, logoSub }) {
   );
 }
 
-function FeatureCard({ title, desc }) {
+function FeatureCard({ title, desc }: { title: string; desc: string }) {
   return (
     <div className="bg-blue-50 rounded-2xl p-6 shadow-sm flex flex-col gap-2">
       <div className="font-bold text-lg text-blue-800">{title}</div>
@@ -504,7 +569,8 @@ function FeatureCard({ title, desc }) {
     </div>
   );
 }
-function ArchCard({ title, desc }) {
+
+function ArchCard({ title, desc }: { title: string; desc: string }) {
   return (
     <div className="rounded-2xl border border-blue-100 p-5 flex flex-col gap-2 bg-white shadow-sm">
       <div className="text-lg font-semibold">{title}</div>
@@ -512,7 +578,8 @@ function ArchCard({ title, desc }) {
     </div>
   );
 }
-function TechTag({ children }) {
+
+function TechTag({ children }: { children: React.ReactNode }) {
   return (
     <span className="bg-blue-100 text-blue-700 rounded-xl px-4 py-1 text-xs font-semibold mr-2 mb-2 inline-block">
       {children}
@@ -521,7 +588,7 @@ function TechTag({ children }) {
 }
 
 export default function Home() {
-  const [lang, setLang] = useState('ru');
+  const [lang, setLang] = useState<Lang>('ru');
   const [menuOpen, setMenuOpen] = useState(false);
   const t = translations[lang];
 
@@ -533,6 +600,7 @@ export default function Home() {
 
   return (
     <div className="bg-white min-h-screen text-neutral-900">
+      {/* Header & Sticky Navigation */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-white/70 backdrop-blur border-b border-gray-100">
         <div className="flex items-center justify-between px-4 md:px-16 h-16">
           <div className="font-bold text-xl text-blue-600 tracking-tight flex items-center gap-2">
@@ -545,70 +613,87 @@ export default function Home() {
                 : 'Metaverse'}
             </span>
           </div>
-          <button
-            className="sm:hidden p-2 rounded-md hover:bg-blue-100"
-            onClick={() => setMenuOpen(!menuOpen)}
-            aria-label="Toggle menu"
-          >
-            <svg
-              className="w-6 h-6 text-blue-600"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
-          </button>
-
-          <nav
-            className={`flex-col sm:flex-row sm:flex gap-2 text-base items-center absolute sm:static top-16 left-0 right-0 bg-white sm:bg-transparent border sm:border-0 rounded-b-lg sm:rounded-none shadow-md sm:shadow-none transition-transform transform sm:translate-y-0 ${
-              menuOpen ? 'translate-y-0' : '-translate-y-full'
-            } sm:flex`}
-          >
+          <nav className="hidden md:flex gap-2 text-base items-center">
             {t.nav.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className="block px-4 py-2 rounded-xl hover:bg-blue-50 transition"
-                onClick={() => setMenuOpen(false)}
+                className="px-2 py-1 rounded-xl hover:bg-blue-50 transition"
               >
                 {link.label}
               </a>
             ))}
-
             <button
               onClick={switchLang}
-              className="ml-0 sm:ml-4 mt-2 sm:mt-0 px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-semibold hover:bg-blue-700 transition"
+              className="ml-4 px-3 py-1 bg-blue-600 text-white rounded-lg text-xs font-semibold hover:bg-blue-700 transition"
               title="Сменить язык"
             >
               {t.lang}
             </button>
           </nav>
+          {/* Mobile menu button */}
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="md:hidden ml-4 p-2 rounded-md text-blue-600 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            aria-label="Toggle menu"
+          >
+            <svg
+              className="h-6 w-6"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              aria-hidden="true"
+            >
+              {menuOpen ? (
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              ) : (
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              )}
+            </svg>
+          </button>
         </div>
+        {/* Mobile menu */}
+        {menuOpen && (
+          <nav className="md:hidden bg-white border-t border-gray-200 shadow-lg px-4 py-4">
+            {t.nav.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className="block py-2 px-2 rounded-md hover:bg-blue-50 transition"
+                onClick={() => setMenuOpen(false)}
+              >
+                {link.label}
+              </a>
+            ))}
+            <button
+              onClick={switchLang}
+              className="mt-4 w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition"
+              title="Сменить язык"
+            >
+              {t.lang}
+            </button>
+          </nav>
+        )}
       </header>
 
-      <section className="flex flex-col items-center justify-center min-h-[70vh] pt-24 pb-8 bg-gradient-to-br from-blue-50 to-white">
-        <LogoBlock
-          lang={lang}
-          logoSub={
-            t.logo_sub ||
-            (lang === 'ru'
-              ? 'Метавселенная'
-              : lang === 'kz'
-              ? 'Метаәлем'
-              : 'Metaverse')
-          }
-        />
+      {/* Welcome Screen */}
+      <section className="flex flex-col items-center justify-center min-h-[70vh] pt-24 pb-8 bg-gradient-to-br from-blue-50 to-white px-4">
+        <LogoBlock lang={lang} logoSub={t.logo_sub} />
         <h1 className="text-2xl md:text-3xl font-bold text-center mb-2 max-w-xl">
           {t.welcome.h1}
         </h1>
-        <p className="text-center max-w-xl text-lg text-gray-600 mb-8">
+        <p className="text-center max-w-xl text-lg text-gray-600 mb-8 whitespace-pre-line">
           {t.welcome.p}
         </p>
         <a
@@ -619,12 +704,15 @@ export default function Home() {
         </a>
       </section>
 
+      {/* Main Content */}
       <main className="w-full max-w-5xl mx-auto px-4 md:px-0 flex flex-col gap-28">
+        {/* Mission */}
         <section id="mission" className="pt-10 scroll-mt-16">
           <h2 className="text-3xl font-bold mb-4">{t.mission.title}</h2>
-          <p className="text-lg mb-2">{t.mission.text}</p>
+          <p className="text-lg mb-2 whitespace-pre-line">{t.mission.text}</p>
         </section>
 
+        {/* Pain Points */}
         <section id="pain" className="scroll-mt-16">
           <h2 className="text-2xl font-bold mb-6">{t.painTitle}</h2>
           <div className="grid md:grid-cols-2 gap-8 text-base">
@@ -637,6 +725,7 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Solution π */}
         <section id="solution" className="scroll-mt-16">
           <h2 className="text-2xl font-bold mb-6">{t.solutionTitle}</h2>
           <div className="grid md:grid-cols-2 gap-8">
@@ -646,6 +735,7 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Architecture */}
         <section id="architecture" className="scroll-mt-16">
           <h2 className="text-2xl font-bold mb-6">{t.archTitle}</h2>
           <div className="grid md:grid-cols-3 gap-8">
@@ -660,6 +750,7 @@ export default function Home() {
           </div>
         </section>
 
+        {/* KPI & Scale */}
         <section id="kpi" className="scroll-mt-16">
           <h2 className="text-2xl font-bold mb-6">{t.kpiTitle}</h2>
           <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
@@ -672,6 +763,7 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Evidence & Proof */}
         <section id="evidence" className="scroll-mt-16">
           <h2 className="text-2xl font-bold mb-6">{t.evidenceTitle}</h2>
           <ul className="space-y-3">
@@ -690,6 +782,7 @@ export default function Home() {
           </a>
         </section>
 
+        {/* Ecosystem & Scale */}
         <section id="ecosystem" className="scroll-mt-16">
           <h2 className="text-2xl font-bold mb-6">{t.ecosystemTitle}</h2>
           <div className="grid md:grid-cols-2 gap-8">
@@ -708,12 +801,11 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Impact & Leadership */}
         <section id="impact" className="scroll-mt-16">
           <h2 className="text-2xl font-bold mb-6">{t.impactTitle}</h2>
           <div className="flex flex-col md:flex-row items-center gap-6">
-            <div className="bg-blue-100 rounded-full w-24 h-24 flex items-center justify-center text-4xl font-bold text-blue-600">
-              π
-            </div>
+            <div className="bg-blue-100 rounded-full w-24 h-24 flex items-center justify-center text-4xl font-bold text-blue-600">π</div>
             <div className="flex-1 text-gray-800 text-lg">
               <div>
                 <strong>{t.impact1}</strong>
@@ -724,6 +816,21 @@ export default function Home() {
           </div>
         </section>
 
+        {/* About Author */}
+        <section id="about-author" className="scroll-mt-16">
+          <h2 className="text-2xl font-bold mb-6">{t.aboutAuthorTitle}</h2>
+          <p className="text-lg">{t.aboutAuthorText}</p>
+        </section>
+
+        {/* Final Call to Action */}
+        <section className="scroll-mt-16 flex flex-col items-center mt-12 mb-24">
+          <h2 className="text-3xl font-bold mb-6 text-center">{t.finalCTAText}</h2>
+          <button className="bg-blue-600 text-white px-8 py-3 rounded-2xl font-semibold shadow-lg hover:bg-blue-700 transition">
+            {t.finalCTAButton}
+          </button>
+        </section>
+
+        {/* Contact / Call to Action */}
         <section id="contact" className="scroll-mt-16">
           <h2 className="text-2xl font-bold mb-6">{t.contactsTitle}</h2>
           <div className="flex flex-col md:flex-row items-center gap-8">
@@ -767,19 +874,13 @@ export default function Home() {
             <div className="flex flex-col gap-2 text-gray-700">
               <div>
                 Email:{' '}
-                <a
-                  href="mailto:akmaral.onlasyn@gmail.com"
-                  className="underline text-blue-600"
-                >
+                <a href="mailto:aisulubekey16@gmail.com" className="underline text-blue-600">
                   akmaral.onlasyn@gmail.com
                 </a>
               </div>
               <div>
                 Telegram:{' '}
-                <a
-                  href="https://t.me/onglassynka"
-                  className="underline text-blue-600"
-                >
+                <a href="https://t.me/onglassynka" className="underline text-blue-600">
                   @onglassynka
                 </a>
               </div>
@@ -789,7 +890,7 @@ export default function Home() {
                   href="https://www.linkedin.com/in/akmaral-onglassyn-2142b9ba/"
                   className="underline text-blue-600"
                 >
-                  linkedin.com/in/akmaral-onglassyn-2142b9ba
+                  linkedin.com/in/aisulu-akmaral-onglassyn-2142b9ba
                 </a>
               </div>
             </div>
@@ -797,6 +898,7 @@ export default function Home() {
         </section>
       </main>
 
+      {/* Footer */}
       <footer className="mt-20 pb-8 text-center text-gray-400 text-sm">
         &copy; {new Date().getFullYear()} {t.copyright}
       </footer>
