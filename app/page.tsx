@@ -539,7 +539,7 @@ Lifelong education, modern data center infrastructure, and analytics for state s
     },
     contact: {
       email: 'aisulubekey16@gmail.com',
-      telegram: '@onglassynka',
+      telegram: '@onglassynkaa',
       linkedin: 'https://www.linkedin.com/in/aisulu-akmaral-onglassyn-2142b9ba/',
     },
     copyright: `π — Қазақстанның ұлттық білім беру метавселенной`,
