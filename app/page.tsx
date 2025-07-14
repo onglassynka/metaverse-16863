@@ -203,7 +203,7 @@ const translations: Record<Lang, {
     },
     contact: {
       email: 'aisulubekey16@gmail.com',
-      telegram: '@onglassynka',
+      telegram: '@onglassynkaa',
       linkedin: 'https://www.linkedin.com/in/aisulu-akmaral-onglassyn-2142b9ba/',
     },
     copyright: `π — Национальная образовательная метавселенная Казахстана`,
