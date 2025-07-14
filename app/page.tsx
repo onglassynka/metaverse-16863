@@ -370,9 +370,9 @@ Lifelong education, modern data center infrastructure, and analytics for state s
       send: 'Send request',
     },
     contact: {
-      email: 'akmaral.onlasyn@gmail.com',
+      email: 'aisulubekey16@gmail.com',
       telegram: '@onglassynka',
-      linkedin: 'https://www.linkedin.com/in/akmaral-onglassyn-2142b9ba/',
+      linkedin: 'https://www.linkedin.com/in/aisulu-akmaral-onglassyn-2142b9ba/',
     },
     copyright: `π — National Education Metaverse of Kazakhstan`,
   },
@@ -875,7 +875,7 @@ export default function Home() {
               <div>
                 Email:{' '}
                 <a href="mailto:aisulubekey16@gmail.com" className="underline text-blue-600">
-                  akmaral.onlasyn@gmail.com
+                  aisulubekey16gmail.com
                 </a>
               </div>
               <div>
@@ -887,7 +887,7 @@ export default function Home() {
               <div>
                 LinkedIn:{' '}
                 <a
-                  href="https://www.linkedin.com/in/akmaral-onglassyn-2142b9ba/"
+                  href="https://www.linkedin.com/in/aisulu-akmaral-onglassyn-2142b9ba/"
                   className="underline text-blue-600"
                 >
                   linkedin.com/in/aisulu-akmaral-onglassyn-2142b9ba
